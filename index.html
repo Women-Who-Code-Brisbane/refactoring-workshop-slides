@@ -100,14 +100,47 @@
           <h2>Introduction to Refactoring</h2>
           <hr>
           <section>
-          	<b>xxxxx</b><br>
-          	<p style="font-size: 35px; font-style: italic;">"xxxxx"</p>
+          	<h3>Why refactoring</h3><br>
+          	<ul>
+              <li>Easier to read
+              <li>Easier to change
+              <li>Enable code re-use
+            </ul>
           </section>
           <section>
-          	<div style="color: #999999; font-style: bold; text-align: center">xxxx</div>
-          	<b>xxx</b><br>
-          	<p style="font-size: 20px">xxxxx</p>
-          	<!-- <img src="./pics/deepti.png" width="150px" alt="deepti"> -->
+            <h3>When to refactor</h3><br>
+            <ul>
+              <li>Legacy code
+              <li>Red/Green development cycle (TDD)
+              <li>Always
+            </ul>
+          </section>
+          <section>
+            <h3>Code smells</h3><br>
+            <ul>
+              <li>Long class / method
+              <li>Temp variables
+              <li>Class / method that does too much (cohesion)
+              <li>Method with too many and too deep if/for statements (complexity)
+              <li>Class / method that depends on many other objects (coupling)
+            </ul>
+          </section>
+          <section>
+            <h3>Design Principles</h3><br>
+            <ul>
+              <li>DRY: Don't Repeast Yourself
+              <li>YAGNI: You Ain't Gonna Need It
+              <li>TDD: Drive good design through writing tests first
+              <li>SOLID
+                <ul style="font-size: 14pt">
+                  <li>S: Single Responsibility : Low coupling & high cohesion. A class should have one, and only one, reason to change
+                  <li>O: Open-close: You should be able to extend a class's behaviour without modifying it
+                  <li>L: Liskov Substitution:  Embracing polymorphism. Derived classes must be substitutable for their base classes.
+                  <li>I: Interface Seggregation: Make fine grained interfaces that are client specific
+                  <li>D: Dependency Inversion: Depend on abstractions, not on concretions
+                </ul>
+              </li>
+            </ul>
           </section>
         </section>
 
@@ -116,13 +149,31 @@
           <h2>Introduction to the Hands On</h2>
           <hr>
           <section>
-          	<p style="font-size: 30px;">xxxx</p>
+          	<p>Sample program that prints a statement of customer's charge in a video store.</p>
+            <img src="./pics/refactoring_cover.jpg" alt="Refactoring Book Hard Cover">
           </section>
-          <!-- <section >
-          	<img src="./pics/where-does-this-fit.png" width="680px" alt="global-context">
-          </section> -->
           <section>
-          	<p style="font-size: 30px">yyyy</p>
+            <p>Another good book</p>
+            <p><b>Working Effectively with Legacy Code</b><br><i>Michael Feathers</i></p>
+            <img src="./pics/legacy_code_cover.jpg" alt="Working Effectively with Legacy Code Book Hard Cover">
+          </section>
+          <section>
+            <p>Three classes</p><br>
+            <ul>
+              <li><b>Customer</b> <i style="font-size: 0.5em">(name)</i>
+              <li><b>Movie</b> <i style="font-size: 0.5em">(title, priceCode)</i>
+              <li><b>Rental</b> <i style="font-size: 0.5em">(movie, daysRented)</i>
+            <ul>
+            <img src="./pics/uml_sample_program.png" alt="High level UML class diagram of the sample program">
+          </section>
+          <section>
+            <i>Customer.statement()</i><br><br>
+            <ul>
+              <li>Prints our the statement
+              <li>Calculates charges depending on movie type and rental duration
+              <li>3 types of movies: Regular, Children, New Releases
+              <li>Calculates frequent renter points
+            <ul>
           </section>
         </section>
 
@@ -130,6 +181,24 @@
         <section id="prac-1" class="title">
           <h2>Some Legacy Code</h2>
           <hr>
+          <section>
+            <h3>Download the example code</h3><br>
+            <ul>
+              <li>JavaScript <i style="font-size: 0.5em">(Req: NodeJS version ???)</i>
+                <pre>git clone https://github.com/Women-Who-Code-Brisbane/refactoring-workshop-js.git</pre>
+              <li>Java <i style="font-size: 0.5em">(Req: JDK version 1.8)</i>
+                <pre>git clone https://github.com/Women-Who-Code-Brisbane/refactoring-workshop-java.git</pre>
+            <ul>
+          </section>
+          <section>
+            <h3>Build the example code</h3><br>
+            <ul>
+              <li>JavaScript
+                <pre>npm install && npm build</pre>
+              <li>Java
+                <pre>./gradlew build</pre>
+            <ul>
+          </section>
         </section>
 
 
