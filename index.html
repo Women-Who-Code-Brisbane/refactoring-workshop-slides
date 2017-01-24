@@ -97,6 +97,7 @@
 
 
         <section id="intro" class="title">
+          <pre style="font-size: 0.5em">git clone https://github.com/Women-Who-Code-Brisbane/refactoring-workshop-slides.git</pre>
           <h2>Introduction to Refactoring</h2>
           <hr>
           <section>
@@ -116,6 +117,7 @@
             </ul>
           </section>
           <section>
+            <br><br><br>
             <h3>Code smells</h3><br>
             <ul>
               <li>Long class / method
@@ -126,6 +128,7 @@
             </ul>
           </section>
           <section>
+            <br><br><br>
             <h3>Design Principles</h3><br>
             <ul>
               <li>DRY: Don't Repeast Yourself
@@ -200,8 +203,13 @@
             <ul>
           </section>
           <section>
+            <h3>Install the git-step program</h3><br>
+            <pre>...</pre>
+          </section>
+          <section>
             <br><br>
             <h3>Look at the example code <i style="font-size: 0.6em">Customer.statement()</i></h3>
+            <pre style="background-color: yellow">git-step 0</pre>
             <table>
             <tr style="font-size: 0.7em">
               <th>JavaScript</th>
@@ -301,6 +309,64 @@ public String statement () {
         <section id="prac-2" class="title">
           <h2>Golden Master Testing</h2>
           <hr>
+          <section>
+            <p style="text-align: center;">"<i>Wherever I do refactoring, the first step is always the same. I need to build a solid set of tests for that section of code</i>"</p>
+            <p style="text-align: center; font-size: 0.5em">Refactoring - Improving the Design of Existing Code - p. 17<p>
+          </section>
+          <section>
+            <h3>Build the Golden Master</h3>
+            <ul>
+              <li>Generate a large set of inputs
+              <li>Record the outputs of the program
+              <li>Use this as a baseline for regression testing during refactoring
+            </ul>
+          </section>
+          <section>
+            <table>
+              <tr style="font-size: 0.7em">
+                <th>JavaScript</th>
+                <th>Java</th>
+              </tr>
+              <tr style="font-size: 0.7em">
+                <td>
+                  <pre style="background-color: yellow">
+git-step 1
+cd test/golden-master
+rm -f data/*.txt
+node createDataSample.js
+                  </pre>
+                </td>
+                <td>
+                  <pre style="background-color: yellow">
+git-step 1
+rm -rf build 
+rm -rf src/test/java/goldenmaster
+./gradlew test
+                  </pre>
+                </td>
+              </tr>
+              <tr style="font-size: 0.7em">
+                <td>
+                  <pre>
+test/golden-master/createDataSample.js
+test/golden-master/data/0-children-movies-for-1-day.txt
+test/golden-master/data/0-new-movies-for-1-day.txt
+...
+test/golden-master/data/9-regular-movies-for-1-day.txt
+                  </pre>
+                </td>
+                <td>
+                  <pre>
+src/test/java/GoldenMasterCreate.java
+src/test/java/goldenmaster/input-1.txt
+src/test/java/goldenmaster/input-2.txt
+...
+src/test/java/goldenmaster/input-10.txt
+                  </pre>
+                </td>
+              </tr>
+            </table>
+          </section>
         </section>
 
 
