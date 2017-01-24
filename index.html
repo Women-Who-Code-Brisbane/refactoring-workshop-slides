@@ -103,9 +103,9 @@
           <section>
           	<h3>Why refactoring</h3><br>
           	<ul>
-              <li>Easier to read
-              <li>Easier to change
-              <li>Enable code re-use
+              <li>Decompose into smaller pieces -> Easier to read
+              <li>Move code where it should be -> Easier to change
+              <li>Make code more re-usable -> Easier to add new features
             </ul>
           </section>
           <section>
@@ -209,7 +209,7 @@
           <section>
             <br><br>
             <h3>Look at the example code <i style="font-size: 0.6em">Customer.statement()</i></h3>
-            <pre style="background-color: yellow">git-step 0</pre>
+            <pre style="background-color: black; color: white">> git-step 0</pre>
             <table>
             <tr style="font-size: 0.7em">
               <th>JavaScript</th>
@@ -322,6 +322,7 @@ public String statement () {
             </ul>
           </section>
           <section>
+            <h3>Build the Golden Master</h3>
             <table>
               <tr style="font-size: 0.7em">
                 <th>JavaScript</th>
@@ -329,19 +330,19 @@ public String statement () {
               </tr>
               <tr style="font-size: 0.7em">
                 <td>
-                  <pre style="background-color: yellow">
-git-step 1
-cd test/golden-master
-rm -f data/*.txt
-node createDataSample.js
+                  <pre style="background-color: black; color: white">
+> git-step 1
+> cd test/golden-master
+> rm -f data/*.txt
+> node createDataSample.js
                   </pre>
                 </td>
                 <td>
-                  <pre style="background-color: yellow">
-git-step 1
-rm -rf build 
-rm -rf src/test/java/goldenmaster
-./gradlew test
+                  <pre style="background-color: black; color: white">
+> git-step 1
+> rm -rf build 
+> rm -rf src/test/java/goldenmaster
+> ./gradlew test
                   </pre>
                 </td>
               </tr>
@@ -362,6 +363,49 @@ src/test/java/goldenmaster/input-1.txt
 src/test/java/goldenmaster/input-2.txt
 ...
 src/test/java/goldenmaster/input-10.txt
+                  </pre>
+                </td>
+              </tr>
+            </table>
+          </section>
+          <section>
+            <h3>Write & Execute the Golden Master Tests</h3>
+            <ul>
+              <li>Test current program behaviour against the Golden Master
+              <li>Run those tests at each small step during refactoring
+            </ul>
+          </section>
+          <section>
+            <h3>Write & Execute the Golden Master Tests</h3>
+            <table>
+              <tr style="font-size: 0.7em">
+                <th>JavaScript</th>
+                <th>Java</th>
+              </tr>
+              <tr style="font-size: 0.7em">
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 2
+> npm test
+                  </pre>
+                </td>
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 2
+> ./gradlew test
+                  </pre>
+                </td>
+              </tr>
+              <tr style="font-size: 0.7em">
+                <td>
+                  <pre>
+test/testAgainstGoldenMaster.js
+                  </pre>
+                </td>
+                <td>
+                  <pre>
+src/test/java/GoldenMasterTest.java
+build/reports/tests/test/index.html
                   </pre>
                 </td>
               </tr>
