@@ -153,12 +153,12 @@
           <hr>
           <section>
           	<p>Sample program that prints a statement of customer's charge in a video store.</p>
-            <img src="./pics/refactoring_cover.jpg" alt="Refactoring Book Hard Cover">
+            <img src="./pics/refactoring_cover.jpg" alt="Refactoring Book Hard Cover" />
           </section>
           <section>
             <p>Another good book</p>
             <p><b>Working Effectively with Legacy Code</b><br><i>Michael Feathers</i></p>
-            <img src="./pics/legacy_code_cover.jpg" alt="Working Effectively with Legacy Code Book Hard Cover">
+            <img src="./pics/legacy_code_cover.jpg" alt="Working Effectively with Legacy Code Book Hard Cover" />
           </section>
           <section>
             <p>Three classes</p><br>
@@ -167,7 +167,7 @@
               <li><b>Movie</b> <i style="font-size: 0.5em">(title, priceCode)</i>
               <li><b>Rental</b> <i style="font-size: 0.5em">(movie, daysRented)</i>
             <ul>
-            <img src="./pics/uml_sample_program.png" alt="High level UML class diagram of the sample program">
+            <img src="./pics/uml_sample_program.png" alt="High level UML class diagram of the sample program" />
           </section>
           <section>
             <i>Customer.statement()</i><br><br>
@@ -553,6 +553,224 @@ private double amountFor(Rental aRental) {
         <section id="prac-4" class="title">
           <h2>Cohesion & Coupling</h2>
           <hr>
+          <section>
+            <h3>Moving code to where it belongs</h3>
+            <ul>
+              <li>Look at what information a method uses
+              <li>Introduce the concept of Replacing Temp with Query
+            </ul>
+          </section>
+          <section>
+            <h3>Moving the getCharge() method</h3>
+            <img width="600px" src="./pics/uml_sample_program.png" alt="High level UML class diagram of the sample program" />
+            <br><br>
+            <img width="600px" src="./pics/uml_getcharge_moved.png" alt="The getCharge method is moved to the Rental class" />
+          </section>
+          <section>
+            <br>
+            <h3>Moving the getCharge() method</h3>
+            <table>
+              <tr style="font-size: 0.7em">
+                <th>JavaScript</th>
+                <th>Java</th>
+              </tr>
+              <tr style="font-size: 0.7em">
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 4
+> npm test
+                  </pre>
+                </td>
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 4
+> ./gradlew test
+                  </pre>
+                </td>
+              </tr>
+              <tr style="font-size: 0.5em">
+                <td>
+                  <pre>
+src/Customer.js
+
+Customer.prototype.statement = function () {
+  [...]
+  for (var index in this._rentals) {
+    [...]
+    result += "\t" + each.getMovie().getTitle() + "\t" + each.getCharge() + "\n";
+    totalAmount += each.getCharge();
+  }
+  //add footer lines result += "Amount
+  result += "Amount owed is " + totalAmount + "\n";
+  result += "You earned " + frequentRenterPoints + " frequent renter points";
+  return result;
+};
+
+src/Rental.js
+
+Rental.prototype.getCharge = function () {
+  var result = 0;
+  //determine amounts for rental line
+  switch (this._movie.getPriceCode()) {
+    case Movie.REGULAR:
+      result += 2;
+      if (this._daysRented > 2)
+        result += (this._daysRented - 2) * 1.5;
+      break;
+    case Movie.NEW_RELEASE:
+      result += this._daysRented * 3;
+      break;
+    case Movie.CHILDRENS:
+      result += 1.5;
+      if (this._daysRented > 3)
+        result += (this._daysRented - 3) * 1.5;
+      break;
+  }
+  return result;
+}
+                  </pre>
+                </td>
+                <td>
+                  <pre>
+src/main/java/Customer.java
+
+public String statement () { 
+    [...] 
+    while (rentals.hasMoreElements()) {
+      [...]
+      result += "\t" + each.getMovie().getTitle()+ "\t" + String.valueOf(each.getCharge()) + "\n";
+      totalAmount += each.getCharge();
+    }
+    //add footer lines result += "Amount
+    result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
+    result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+    return result;
+  }
+
+src/main/java/Rental.java
+
+public double getCharge() {
+  double result = 0;
+  switch (getMovie().getPriceCode()) {
+    case Movie.REGULAR: 
+      result += 2;
+      if (getDaysRented() > 2)
+      result += (getDaysRented() - 2) * 1.5; 
+      break;
+    case Movie.NEW_RELEASE:
+      result += getDaysRented() * 3; 
+      break;
+    case Movie.CHILDRENS:
+      result += 1.5;
+      if (getDaysRented() > 3)
+      result += (getDaysRented() - 3) * 1.5; 
+      break;
+  }
+  return result;
+}
+                  </pre>
+                </td>
+              </tr>
+            </table>
+          </section>
+          <section>
+            <h3>Moving the getCharge() method</h3>
+            <ul>
+              <li>Increased encapsulation of the Rental class
+              <li>Reduce coupling (between Customer & Movie)
+              <li>Increased re-usability
+            </ul>
+          </section>
+          <section>
+            <h3>Extract & move the frequent renter point calculation</h3>
+            <br>
+            <img width="600px" src="./pics/uml_getcharge_moved.png" alt="The getCharge method is moved to the Rental class" />
+            <br><br>
+            <img width="600px" src="./pics/uml_getfreqpts_moved.png" alt="The getFrequentRenterPoints method is moved to the Rental class" />
+          </section>
+          <section>
+            <br><br>
+            <h3>Extract & move the frequent renter point calculation</h3>
+            <table>
+              <tr style="font-size: 0.7em">
+                <th>JavaScript</th>
+                <th>Java</th>
+              </tr>
+              <tr style="font-size: 0.7em">
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 5
+> npm test
+                  </pre>
+                </td>
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 5
+> ./gradlew test
+                  </pre>
+                </td>
+              </tr>
+              <tr style="font-size: 0.5em">
+                <td>
+                  <pre>
+src/Customer.js
+
+Customer.prototype.statement = function () {
+  [...]
+  for (var index in this._rentals) {
+    var each = this._rentals[index];
+    frequentRenterPoints += each.getFrequentRenterPoints();
+    [...]
+  }
+  //add footer lines result += "Amount
+  result += "Amount owed is " + totalAmount + "\n";
+  result += "You earned " + frequentRenterPoints + " frequent renter points";
+  return result;
+};
+
+src/Rental.js
+
+Rental.prototype.getFrequentRenterPoints = function () {
+  if ((this._movie.getPriceCode() == Movie.NEW_RELEASE) && this._daysRented > 1) {
+    return 2;
+  } else {
+    return 1;
+  }
+};
+                  </pre>
+                </td>
+                <td>
+                  <pre>
+src/main/java/Customer.java
+
+public String statement () { 
+  [...]
+  while (rentals.hasMoreElements()) {
+    Rental each = (Rental) rentals.nextElement();
+    frequentRenterPoints += each.getFrequentRenterPoints();
+    [...]
+  }
+  //add footer lines result += "Amount
+  result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
+  result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+  return result;
+}
+
+src/main/java/Rental.java
+
+public int getFrequentRenterPoints() {
+  if ((getMovie().getPriceCode() == Movie.NEW_RELEASE) && getDaysRented() > 1) {
+    return 2; 
+  }
+  else {
+    return 1; 
+  }
+}
+                  </pre>
+                </td>
+              </tr>
+            </table>
+          </section>
         </section>
 
 
