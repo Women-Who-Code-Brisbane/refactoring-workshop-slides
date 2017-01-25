@@ -977,7 +977,7 @@ public String htmlStatement() {
           <hr>
           <section>
             <br>
-            <h3>Is there a problem with the Price calucation?</h3>
+            <h3>Is there a problem with the Price calculation?</h3>
               <ul>
                 <li>What may change in the future?
                 <li>How much Rental knows about the inner workings of a Movie?
@@ -987,6 +987,38 @@ public String htmlStatement() {
             <br>
             <h3>Use polymorphism</h3>
             <img src="./pics/uml_polymorphism.png" alt="State pattern on the movie" />
+          </section>
+          <section>
+            <br>
+                <p>Moving GetCharge() and GetFrequentRenterPoints() to the Movie class
+                <pre style="background-color: black; color: white">
+> git-step 8
+> npm test / ./gradlew test
+                </pre>
+          </section>
+          <section>
+            <br>
+                <p>Creating the price class and subclasses
+                <pre style="background-color: black; color: white">
+> git-step 9
+> npm test / ./gradlew test
+                </pre>
+          </section>
+          <section>
+            <br>
+                <p>Implement GetCharge() in subclasses
+                <pre style="background-color: black; color: white">
+> git-step 10
+> npm test / ./gradlew test
+                </pre>
+          </section>
+          <section>
+            <br>
+                <p>Implement GetFrequentRenterPoints() in subclasses
+                <pre style="background-color: black; color: white">
+> git-step 11
+> npm test / ./gradlew test
+                </pre>
           </section>
         </section>
 
