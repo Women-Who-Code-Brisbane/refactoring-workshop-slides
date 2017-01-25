@@ -784,8 +784,16 @@ public int getFrequentRenterPoints() {
             </ul>
           </section>
           <section>
+            <br>
+            <h3>Avoid duplication of code</h3><br>
+              <ul>
+                <li>Remove Temps
+                <li>New method can be interfaced
+              </ul>
+          </section>
+          <section>
             <br><br>
-            <h3>Avoid duplication of code : Remove Temps</h3>
+            <h3>Removing Temps</h3>
             <table>
               <tr style="font-size: 0.7em">
                 <th>JavaScript</th>
@@ -828,11 +836,13 @@ Customer.prototype.statement = function () {
   var result = "Rental Record for " + this.getName() + "\n";
   for (var index in this._rentals) {
     var each = this._rentals[index];
-    result += "\t" + each.getMovie().getTitle() + "\t" + each.getCharge() + "\n";
+    result += "\t" + each.getMovie().getTitle() + "\t" 
+      + each.getCharge() + "\n";
   }
   //add footer lines result += "Amount
   result += "Amount owed is " + this.getTotalCharge() + "\n";
-  result += "You earned " + this.getTotalFrequentRenterPoints() + " frequent renter points";
+  result += "You earned " + this.getTotalFrequentRenterPoints() 
+    + " frequent renter points";
   return result;
 };
                   </pre>
@@ -855,11 +865,100 @@ public String statement () {
   while (rentals.hasMoreElements()) {
     Rental each = (Rental) rentals.nextElement();
     //show figures for this rental
-    result += "\t" + each.getMovie().getTitle()+ "\t" + String.valueOf(each.getCharge()) + "\n";
+    result += "\t" + each.getMovie().getTitle()+ "\t" 
+      + String.valueOf(each.getCharge()) + "\n";
   }
   //add footer lines result += "Amount
   result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
-  result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) + " frequent renter points";
+  result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) 
+    + " frequent renter points";
+  return result;
+}
+                  </pre>
+                </td>
+              </tr>
+            </table>
+          </section>
+          <section>
+            <br>
+            <h3>Worth stopping there</h3><br>
+              <ul>
+                <li>Have we reduced the amount of code?
+                <li>Will the code perform better?
+                <li>Refactoring is not optimisation!
+              </ul>
+          </section>
+          <section>
+            <br><br>
+            <h3>Add the Customer.htmlSatement() method</h3>
+            <ul>
+              <li>Make sure you write tests!
+            </ul>
+            <table>
+              <tr style="font-size: 0.7em">
+                <th>JavaScript</th>
+                <th>Java</th>
+              </tr>
+              <tr style="font-size: 0.7em">
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 7
+> npm test
+                  </pre>
+                </td>
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 7
+> ./gradlew test
+                  </pre>
+                </td>
+              </tr>
+              <tr style="font-size: 0.5em">
+                <td>
+                  <pre>
+src/Customer.js
+
+Customer.prototype.htmlStatement = function(){
+  var result = "&lt;h1&gt;Rental Record for " + this.getName() + "&lt;/h1&gt;";
+  result += "&lt;table&gt;";
+
+  for (var index in _rentals) {
+    var each = _rentals[index];
+    //show figures for this rental
+    result += "&lt;tr&gt;&lt;td&gt;" + each.getMovie().getTitle() 
+      + "&lt;/td&gt;&lt;td&gt;" + each.getCharge() + "&lt;/td&gt;&lt;/tr&gt;";
+  }
+
+  //add footer lines result += "Amount
+  result += "&lt;tr&gt;&lt;td colspan='2'&gt;Amount owed is " 
+    + this.getTotalCharge() + "&lt;/td&gt;&lt;/tr&gt;";
+  result += "&lt;tr&gt;&lt;td colspan='2'&gt;You earned " 
+    + this.getTotalFrequentRenterPoints() + " frequent renter points&lt;/td&gt;&lt;/tr&gt;";
+  result += "&lt;/table&gt;";
+  return result;
+};
+                  </pre>
+                </td>
+                <td>
+                  <pre>
+src/main/java/Customer.java
+
+public String htmlStatement() {
+  Enumeration rentals = _rentals.elements();
+  String result = "&lt;h1&gt;Rental Record for " + getName() + "&lt;/h1&gt;";
+  result += "&lt;table&gt;";
+  while (rentals.hasMoreElements()) {
+    Rental each = (Rental) rentals.nextElement();
+   //show figures for this rental
+    result += "&lt;tr&gt;&lt;td&gt;" + each.getMovie().getTitle() 
+      + "&lt;/td&gt;&lt;td&gt;" + String.valueOf(each.getCharge()) + "&lt;/td&gt;&lt;/tr&gt;";
+  }
+  //add footer lines result += "Amount
+  result += "&lt;tr&gt;&lt;td colspan='2'&gt;Amount owed is " 
+    + String.valueOf(getTotalCharge()) + "&lt;/td&gt;&lt;/tr&gt;";
+  result += "&lt;tr&gt;&lt;td colspan='2'&gt;You earned " 
+    + String.valueOf(getTotalFrequentRenterPoints()) + " frequent renter poin&lt;/td&gt;&lt;/tr&gt;";
+  result += "&lt;/table&gt;";
   return result;
 }
                   </pre>
@@ -868,6 +967,7 @@ public String statement () {
             </table>
           </section>
         </section>
+
         <section id="prac-6" class="title">
           <h2>Use SOLID Principles</h2>
           <hr>
