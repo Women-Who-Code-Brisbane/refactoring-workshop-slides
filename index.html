@@ -990,7 +990,7 @@ public String htmlStatement() {
           </section>
           <section>
             <br>
-                <p>Moving GetCharge() and GetFrequentRenterPoints() to the Movie class
+                <p>Moving getCharge() and GetFrequentRenterPoints() to the Movie class
                 <pre style="background-color: black; color: white">
 > git-step 8
 > npm test / ./gradlew test
@@ -1006,7 +1006,7 @@ public String htmlStatement() {
           </section>
           <section>
             <br>
-                <p>Implement GetCharge() in subclasses
+                <p>Implement getCharge() in subclasses
                 <pre style="background-color: black; color: white">
 > git-step 10
 > npm test / ./gradlew test
@@ -1014,11 +1014,20 @@ public String htmlStatement() {
           </section>
           <section>
             <br>
-                <p>Implement GetFrequentRenterPoints() in subclasses
+                <p>Implement getFrequentRenterPoints() in subclasses
                 <pre style="background-color: black; color: white">
 > git-step 11
 > npm test / ./gradlew test
                 </pre>
+          </section>
+          <section>
+            <br>
+            <h3>What have we achieved</h3>
+                <ul>
+                  <li>S&I: Single Responsibility & Interface Seggregation with  the Price subtypes
+                  <li>O: Open-close: Extension of GetFrequentRenterPoints for NewReleasePrice only
+                  <li>L&D: Liskov Substitution & Dependency Inversion:  Movie.getCharge() and Movie.getFrequentRenterPoints() only use Price interface
+                </ul>
           </section>
         </section>
 
