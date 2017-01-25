@@ -178,6 +178,11 @@
               <li>Calculates frequent renter points
             <ul>
           </section>
+          <section>
+            <h3>Underlying idea: Adding HTML statements</h3><br>
+            <p style="text-align: center;">"<i>When you find you have to add a feature to a program, and the program's code is not structured in a convenient way to add the feature, first refactor the program to make it easy to add the feature, then add the feature.</i>"</p>
+            <p style="text-align: center; font-size: 0.5em">Refactoring - Improving the Design of Existing Code - p. 17</p>
+          </section>
         </section>
 
 
@@ -315,7 +320,7 @@ public String statement () {
           <hr>
           <section>
             <p style="text-align: center;">"<i>Wherever I do refactoring, the first step is always the same. I need to build a solid set of tests for that section of code</i>"</p>
-            <p style="text-align: center; font-size: 0.5em">Refactoring - Improving the Design of Existing Code - p. 17<p>
+            <p style="text-align: center; font-size: 0.5em">Refactoring - Improving the Design of Existing Code - p. 17</p>
           </section>
           <section>
             <h3>Build the Golden Master</h3>
@@ -421,6 +426,127 @@ build/reports/tests/test/index.html
         <section id="prac-3" class="title">
           <h2>Refactoring basics</h2>
           <hr>
+          <section>
+            <h3>Extraction of a method</h3>
+            <ul>
+              <li>Refactor in small steps
+              <li>Look at local variables used and those modified by the block of code to extract 
+              <li>Use refactoring abilities of your editor
+            </ul>
+          </section>
+          <section>
+            <br>
+            <h3>Extraction of a method</h3>
+            <table>
+              <tr style="font-size: 0.7em">
+                <th>JavaScript</th>
+                <th>Java</th>
+              </tr>
+              <tr style="font-size: 0.7em">
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 3
+> npm test
+                  </pre>
+                </td>
+                <td>
+                  <pre style="background-color: black; color: white">
+> git-step 3
+> ./gradlew test
+                  </pre>
+                </td>
+              </tr>
+              <tr style="font-size: 0.5em">
+                <td>
+                  <pre>
+src/Customer.js
+
+Customer.prototype.statement = function () {
+  [...]
+  for (var index in this._rentals) {
+    var each = this._rentals[index];
+    var thisAmount = amountFor(each);
+    [...]
+  }
+  //add footer lines result += "Amount
+  result += "Amount owed is " + totalAmount + "\n";
+  result += "You earned " + frequentRenterPoints + " frequent renter points";
+  return result;
+};
+
+function amountFor (rental) {
+  var result = 0;
+  //determine amounts for rental line
+  switch (rental.getMovie().getPriceCode()) {
+    case Movie.REGULAR:
+      result += 2;
+      if (rental.getDaysRented() > 2)
+        result += (rental.getDaysRented() - 2) * 1.5;
+      break;
+    case Movie.NEW_RELEASE:
+      result += rental.getDaysRented() * 3;
+      break;
+    case Movie.CHILDRENS:
+      result += 1.5;
+      if (rental.getDaysRented() > 3)
+        result += (rental.getDaysRented() - 3) * 1.5;
+      break;
+  }
+  return result;
+}
+                  </pre>
+                </td>
+                <td>
+                  <pre>
+src/main/java/Customer.java
+
+public String statement () {
+  [...] 
+  while (rentals.hasMoreElements()) {
+    double thisAmount = 0;
+    Rental each = (Rental) rentals.nextElement();
+    thisAmount = amountFor(each);
+    [...]
+  }
+  //add footer lines result += "Amount
+  result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
+  result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+  return result;
+}
+
+private double amountFor(Rental aRental) {
+  double result = 0;
+  switch (aRental.getMovie().getPriceCode()) {
+    case Movie.REGULAR: 
+      result += 2;
+      if (aRental.getDaysRented() > 2)
+      result += (aRental.getDaysRented() - 2) * 1.5; 
+      break;
+    case Movie.NEW_RELEASE:
+      result += aRental.getDaysRented() * 3; 
+      break;
+    case Movie.CHILDRENS:
+      result += 1.5;
+      if (aRental.getDaysRented() > 3)
+      result += (aRental.getDaysRented() - 3) * 1.5; 
+      break;
+  }
+  return result;
+}
+                  </pre>
+                </td>
+              </tr>
+            </table>
+          </section>
+          <section>
+            <h3>Extraction of a method</h3>
+            <ul>
+              <li>Get into the mechanics of refactoring
+              <li>Increased re-use
+              <li>Increased readability by reducing method length and complexity
+              <li>Named variables appropriately
+            </ul>
+          </section>
         </section>
 
 
